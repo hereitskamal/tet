@@ -11,6 +11,16 @@ export const metadata: Metadata = { title: 'My Account' }
 
 type OrderItem = { name: string; price: number; quantity: number; image?: string }
 type OrderAddress = { line1: string; line2?: string; city: string; state: string; zip: string; country: string }
+type Order = {
+  id: string
+  userId: string
+  items: unknown
+  total: number
+  status: string
+  address: unknown
+  createdAt: Date
+  updatedAt: Date
+}
 
 export default async function AccountPage() {
   const session = await auth()
@@ -73,7 +83,7 @@ export default async function AccountPage() {
             </div>
           ) : (
             <div className="space-y-4">
-              {orders.map((order) => {
+              {orders.map((order: Order) => {
                 const items = order.items as OrderItem[]
                 const address = order.address as OrderAddress
                 return (
