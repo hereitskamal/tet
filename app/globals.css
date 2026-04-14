@@ -1,26 +1,100 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "./typography.css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+
+  /* The Earthy Touch Co. Monochrome Palette */
+  --color-primary: #000000;
+  --color-on-primary: #e5e2e1;
+  --color-surface: #f9f9f9;
+  --color-surface-low: #f3f3f4;
+  --color-surface-lowest: #ffffff;
+  --color-surface-variant: #e2e2e2;
+  --color-on-surface: #1a1c1c;
+  --color-outline: #777777;
+  --color-outline-variant: #c6c6c6;
+  --color-tertiary: #3b3d2b;
+  --color-error: #ba1a1a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #f9f9f9;
+  color: #1a1c1c;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism nav */
+.glass {
+  background: rgba(249, 249, 249, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Smooth image transitions */
+img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #f3f3f4;
+}
+::-webkit-scrollbar-thumb {
+  background: #c6c6c6;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #777777;
+}
+
+/* Mobile-safe app shell */
+:root {
+  color-scheme: light;
+}
+
+body {
+  min-height: 100vh;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+main.mobile-app-shell {
+  background: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+  body {
+    background: #f3f3f4;
+  }
+
+  main.mobile-app-shell {
+    border-top-left-radius: 32px;
+    border-top-right-radius: 32px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 -24px 40px rgba(0, 0, 0, 0.08);
+    padding-top: 1px;
+    overflow: hidden;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.92);
+  }
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
 }
