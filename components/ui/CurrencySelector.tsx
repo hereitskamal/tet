@@ -29,8 +29,7 @@ export default function CurrencySelector() {
     setIsOpen(false)
   }
 
-  const currencyOptions = Object.entries(SUPPORTED_CURRENCIES).map(([code, config]) => ({
-    code: code as CurrencyCode,
+  const currencyOptions = Object.entries(SUPPORTED_CURRENCIES).map(([key, config]) => ({
     ...config,
   }))
 
