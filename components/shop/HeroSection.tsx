@@ -24,7 +24,7 @@ export default function HeroSection() {
       </div>
 
       {/* ── Content ────────────────────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-0 py-32">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-6 py-32">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
