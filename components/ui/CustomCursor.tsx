@@ -12,7 +12,7 @@
  * already inside the viewport on load).
  */
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 type CursorState = 'default' | 'pointer' | 'view'
@@ -46,31 +46,14 @@ function getCursorState(target: EventTarget | null): CursorState {
 }
 
 export default function CustomCursor() {
-  const pos = useRef({ x: -100, y: -100 })
   const [renderPos, setRenderPos] = useState({ x: -100, y: -100 })
   const [visible, setVisible] = useState(false)
   const [pressed, setPressed] = useState(false)
   const [state, setState] = useState<CursorState>('default')
-  const rafId = useRef<number | null>(null)
-
-  useEffect(() => {
-    // Smooth-follow via rAF so the cursor never lags a full React render cycle
-    const loop = () => {
-      setRenderPos((prev) => {
-        const dx = pos.current.x - prev.x
-        const dy = pos.current.y - prev.y
-        if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) return prev
-        return { x: prev.x + dx * 0.18, y: prev.y + dy * 0.18 }
-      })
-      rafId.current = requestAnimationFrame(loop)
-    }
-    rafId.current = requestAnimationFrame(loop)
-    return () => { if (rafId.current) cancelAnimationFrame(rafId.current) }
-  }, [])
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      pos.current = { x: e.clientX, y: e.clientY }
+      setRenderPos({ x: e.clientX, y: e.clientY })
       if (!visible) setVisible(true)
       setState(getCursorState(e.target))
     }
