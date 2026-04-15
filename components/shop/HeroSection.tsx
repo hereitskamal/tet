@@ -8,18 +8,20 @@ import { staggerContainer, staggerItem } from '@/lib/animations'
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden min-h-[100svh] flex items-center">
+    <section className="relative overflow-hidden min-h-[100svh] flex items-center bg-[#f9f9f9]">
 
-      {/* ── Background image ───────────────────────────────────────── */}
-      <Image
-        src="/heroImage.png"
-        alt=""
-        fill
-        priority
-        className="object-cover object-center w-screen"
-        sizes='120vw'
-      />
-
+      {/* ── Background image — desktop only ───────────────────────── */}
+      <div className="hidden md:block absolute inset-0">
+        <Image
+          src="/heroImage.png"
+          alt=""
+          fill
+          priority
+          quality={100}
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+      </div>
 
       {/* ── Content ────────────────────────────────────────────────── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-0 py-32">
