@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./typography.css";
+@import "lenis/dist/lenis.css";
 
 @theme inline {
   --font-sans: var(--font-inter);
@@ -23,7 +24,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Lenis handles smooth scrolling */
 }
 
 body {
@@ -34,11 +35,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Glassmorphism nav */
+/* Glassmorphism nav with enhanced blur */
 .glass {
-  background: rgba(249, 249, 249, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(249, 249, 249, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Smooth image transitions */
@@ -97,4 +99,28 @@ main.mobile-app-shell {
 :focus-visible {
   outline: 2px solid #000;
   outline-offset: 2px;
+}
+
+/* Cursor - hide default for custom cursor */
+* {
+  cursor: none !important;
+}
+
+/* Video element smooth transitions */
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Animation performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { staggerContainer, staggerItem } from '@/lib/animations'
 
 export default function HeroSection() {
   return (
@@ -10,27 +11,46 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-16 min-h-[calc(100vh-6rem)] flex items-center">
         <div className="grid gap-16 lg:grid-cols-[1.1fr,0.9fr] items-center py-24">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+            variants={staggerContainer}
+            initial="hidden"
+            animate="show"
             className="space-y-10"
           >
-            <p className="text-[10px] tracking-[0.4em] uppercase text-[#777777]">
+            {/* Tag */}
+            <motion.p
+              variants={staggerItem}
+              className="text-[10px] tracking-[0.4em] uppercase text-[#777777]"
+            >
               Belo.Fur
-            </p>
-            <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-black leading-[0.95] tracking-[-0.04em] max-w-3xl">
+            </motion.p>
+
+            {/* Headline */}
+            <motion.h1
+              variants={staggerItem}
+              className="text-[clamp(3.5rem,8vw,6.5rem)] font-black leading-[0.95] tracking-[-0.04em] max-w-3xl"
+            >
               Calm furniture for rooms that feel effortless.
-            </h1>
-            <p className="max-w-2xl text-lg leading-[1.9] text-[#555555]">
+            </motion.h1>
+
+            {/* Description */}
+            <motion.p
+              variants={staggerItem}
+              className="max-w-2xl text-lg leading-[1.9] text-[#555555]"
+            >
               Warm materials and sculptural lines designed to make every interior feel curated and quietly luxurious.
-            </p>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              variants={staggerItem}
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+            >
               <Link
                 href="/products"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-8 py-4 text-sm font-semibold text-white uppercase tracking-[0.18em] hover:bg-[#222222] transition-colors"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-8 py-4 text-sm font-semibold text-white uppercase tracking-[0.18em] hover:bg-[#222222] transition-colors group"
               >
                 shop now
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 href="/collections"
@@ -38,7 +58,7 @@ export default function HeroSection() {
               >
                 explore collection
               </Link>
-            </div>
+            </motion.div>
           </motion.div>
 
          

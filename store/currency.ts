@@ -53,23 +53,45 @@ export const SUPPORTED_CURRENCIES: Record<CurrencyCode, CurrencyConfig> = {
 
 interface CurrencyStore {
   selectedCurrency: CurrencyCode
+  /** True once the user has explicitly picked a currency via the selector. */
+  hasUserOverride: boolean
   setCurrency: (currency: CurrencyCode) => void
+  /**
+   * Seed currency from geo detection (proxy → GeoInit).
+   * Silently ignored when the user has already made an explicit choice.
+   */
+  initFromGeo: (currency: CurrencyCode) => void
   getCurrencyConfig: () => CurrencyConfig
 }
 
 export const useCurrencyStore = create<CurrencyStore>()(
   persist(
     (set, get) => ({
-      selectedCurrency: 'INR',
+      selectedCurrency: 'USD',
+      hasUserOverride: false,
 
       setCurrency: (currency: CurrencyCode) => {
-        set({ selectedCurrency: currency })
+        set({ selectedCurrency: currency, hasUserOverride: true })
+      },
+
+      initFromGeo: (currency: CurrencyCode) => {
+        if (!get().hasUserOverride) {
+          set({ selectedCurrency: currency })
+        }
       },
 
       getCurrencyConfig: () => {
         return SUPPORTED_CURRENCIES[get().selectedCurrency]
       },
     }),
-    { name: 'tht-currency' }
+    {
+      name: 'tht-currency',
+      // Don't persist hasUserOverride across hard resets; only the chosen currency
+      // and the override flag need to survive.
+      partialize: (state) => ({
+        selectedCurrency: state.selectedCurrency,
+        hasUserOverride: state.hasUserOverride,
+      }),
+    }
   )
 )

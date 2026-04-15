@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import { prisma } from '@/lib/prisma'
 import HeroSection from '@/components/shop/HeroSection'
 import ProductGrid from '@/components/shop/ProductGrid'
+import BentoGallery from '@/components/shop/BentoGallery'
 import AnimatedSection from '@/components/ui/AnimatedSection'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
@@ -63,6 +64,8 @@ export default async function HomePage() {
 
         <ProductGrid products={featuredProducts.slice(0, 3)} />
       </section>
+
+      <BentoGallery products={featuredProducts.slice(0, 3)} />
 
       <section className="max-w-7xl mx-auto px-6 lg:px-16 py-16">
         <div className="grid gap-8 lg:grid-cols-2">

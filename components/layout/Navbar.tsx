@@ -7,7 +7,7 @@ import { Home, Layers, Menu, ShoppingBag, User, X } from 'lucide-react'
 import { useCartStore } from '@/store/cart'
 import Logo from './Logo'
 import CurrencySelector from '@/components/ui/CurrencySelector'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 
 const navLinks = [
@@ -21,12 +21,27 @@ export default function Navbar() {
   const { count, openCart } = useCartStore()
   const { data: session } = useSession()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [atTop, setAtTop] = useState(true)
+  const [isScrollingDown, setIsScrollingDown] = useState(false)
+  const lastScrollY = useRef(0)
   const cartCount = count()
 
+  // Navbar is visible when:
+  //   • at the very top (scrollY < 80) — always show
+  //   • OR scrolling UP anywhere on the page
+  const shouldShow = atTop || !isScrollingDown
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
+    const onScroll = () => {
+      const y = window.scrollY
+      setAtTop(y < 80)
+      setIsScrollingDown(y > lastScrollY.current + 2) // +2 avoids jitter
+      lastScrollY.current = y
+    }
+
+    // Initialise on mount in case page loads mid-scroll
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
@@ -36,18 +51,36 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Hidden-until-scroll Glassmorphism Navigation */}
       <motion.nav
         className="fixed top-0 left-0 right-0 z-50"
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        initial={{ y: 0, opacity: 1 }}
+        animate={{
+          y: shouldShow ? 0 : -100,
+          opacity: shouldShow ? 1 : 0,
+        }}
+        transition={{
+          duration: 0.3,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        }}
+        style={{ pointerEvents: shouldShow ? 'auto' : 'none' }}
       >
+        {/* Glassmorphic backdrop — transparent at top, frosted when scrolled */}
         <div
-          className={`px-6 py-4 transition-all duration-300 ${
-            scrolled ? 'glass shadow-[0_1px_0_rgba(0,0,0,0.06)]' : 'bg-transparent'
-          }`}
-        >
-          <div className="flex items-center justify-between">
+          className="absolute inset-0 transition-all duration-300"
+          style={{
+            background: atTop
+              ? 'transparent'
+              : 'rgba(249, 249, 249, 0.7)',
+            backdropFilter: atTop ? 'none' : 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: atTop ? 'none' : 'blur(20px) saturate(180%)',
+            borderBottom: atTop ? 'none' : '1px solid rgba(255,255,255,0.2)',
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative px-6 py-4">
+          <div className="flex items-center justify-between max-w-7xl mx-auto">
             {/* Logo */}
             <Logo />
 
@@ -57,7 +90,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm tracking-[0.05em] lowercase transition-colors ${
+                  className={`text-sm tracking-[0.05em] lowercase transition-all duration-200 ${
                     pathname === link.href
                       ? 'text-black font-medium'
                       : 'text-[#777777] hover:text-black'
@@ -69,7 +102,7 @@ export default function Navbar() {
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <CurrencySelector />
 
               {session?.user ? (

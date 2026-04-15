@@ -1,16 +1,16 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState } from 'react'
-import { ShoppingBag, Check } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { ShoppingBag, Check, Play } from 'lucide-react'
 import type { Product } from '@/types'
 import { useCartStore } from '@/store/cart'
 import { useCurrency } from '@/hooks/useCurrency'
 
 interface ProductCardProps {
-  product: Product
+  product: Product & { videoUrl?: string }
   index?: number
 }
 
@@ -18,6 +18,12 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const { addItem } = useCartStore()
   const { formatPrice } = useCurrency()
   const [added, setAdded] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
+  const [videoLoaded, setVideoLoaded] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Simulate video URL - in production, this would come from your database
+  const hasVideo = product.videoUrl || Math.random() > 0.5 // Random for demo
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -26,23 +32,93 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
     setTimeout(() => setAdded(false), 2000)
   }
 
+  const handleMouseEnter = () => {
+    setIsHovering(true)
+    if (videoRef.current && hasVideo) {
+      videoRef.current.currentTime = 0
+      videoRef.current.play().catch(() => {
+        // Fallback if video fails to play
+        setIsHovering(false)
+      })
+    }
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovering(false)
+    if (videoRef.current && hasVideo) {
+      videoRef.current.pause()
+      videoRef.current.currentTime = 0
+    }
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
-      <Link href={`/products/${product.slug}`} className="group block">
-        {/* Image container */}
-        <div className="relative overflow-hidden bg-[#e2e2e2] rounded-sm mb-4">
+      <Link href={`/products/${product.slug}`} className="group block" data-cursor="view">
+        {/* Image/Video container */}
+        <div
+          className="relative overflow-hidden bg-[#e2e2e2] rounded-sm mb-4"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <div className="aspect-[3/4]">
-            <Image
-              src={product.images[0]}
-              alt={product.name}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
+            {/* Image (visible by default) */}
+            <motion.div
+              className="absolute inset-0"
+              animate={{
+                opacity: isHovering && hasVideo ? 0 : 1,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              <Image
+                src={product.images[0]}
+                alt={product.name}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+            </motion.div>
+
+            {/* Video overlay (hover state) */}
+            {hasVideo && (
+              <motion.video
+                ref={videoRef}
+                className="absolute inset-0 w-full h-full object-cover"
+                autoPlay={false}
+                loop
+                muted
+                onLoadedData={() => setVideoLoaded(true)}
+                animate={{
+                  opacity: isHovering ? 1 : 0,
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Simulated video URL - replace with actual video source */}
+                <source src={product.videoUrl || '/videos/product-demo.mp4'} type="video/mp4" />
+              </motion.video>
+            )}
+
+            {/* Play indicator when hovering over video */}
+            <AnimatePresence>
+              {isHovering && hasVideo && (
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Play className="w-12 h-12 text-white fill-white" />
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Tags */}
