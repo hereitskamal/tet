@@ -101,9 +101,9 @@ export default function BentoGallery({ products }: { products: Product[] }) {
       <div className="flex items-end justify-between mb-10">
         <div>
           <p className="text-[10px] tracking-[0.28em] uppercase text-[#777] mb-2">brand universe</p>
-          <h2 className="text-[clamp(2rem,4.5vw,3rem)] font-black lowercase tracking-tight leading-[0.95]">
+          <h3 className="text-[clamp(2rem,4.5vw,4.6rem)] font-black lowercase tracking-tight leading-[0.95]">
             objects. stories. impact.
-          </h2>
+          </h3>
         </div>
         <Link href="/products" className="hidden md:flex items-center gap-1.5 text-sm text-[#777] hover:text-black transition-colors lowercase">
           explore all <ArrowRight className="w-3.5 h-3.5" />
@@ -115,7 +115,7 @@ export default function BentoGallery({ products }: { products: Product[] }) {
         ┌──────────────────┬────────┬────────┐
         │                  │ video  │ stat   │
         │   hero product   ├────────┴────────┤
-        │                  │  p2   │   p3   │
+        │                  │   p2   │   p3   │
         └──────────────────┴────────┴────────┘
       */}
 

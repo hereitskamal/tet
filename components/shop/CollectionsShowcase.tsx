@@ -65,8 +65,8 @@ export default function CollectionsShowcase() {
                   />
                 </div>
 
-                {/* Thin divider */}
-                <div className="h-px bg-[#e2e2e2] mb-4 transition-colors group-hover:bg-gray-400" />
+                {/* Thin divider
+                <div className="h-px bg-[#e2e2e2] mb-4 transition-colors group-hover:bg-gray-400" /> */}
 
                 {/* Label */}
                 <div className="flex items-end justify-between">

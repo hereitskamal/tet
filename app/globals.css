@@ -113,6 +113,15 @@ video {
   object-fit: cover;
 }
 
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+
 /* Animation performance optimizations */
 @media (prefers-reduced-motion: reduce) {
   *,
