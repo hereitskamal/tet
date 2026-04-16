@@ -8,18 +8,18 @@ import { staggerContainer, staggerItem } from '@/lib/animations'
 
 export default function HeroSection() {
   return (
-    <section className="relative overflow-hidden min-h-[100svh] flex items-center bg-[#f9f9f9]">
+    <section className="relative overflow-hidden min-h-[100svh] flex items-center bg-white">
 
       {/* ── Background image — desktop only ───────────────────────── */}
-      <div className="hidden md:block absolute inset-0">
+      <div className="hidden md:block absolute w-1/2 h-[500px] top-1/4 right-0">
         <Image
-          src="/heroImage.png"
+          src="/heroImage2.png"
           alt=""
           fill
           priority
           quality={100}
-          className="object-cover object-center blur-sm"
-          sizes="100vw"
+          className="object-cover object-center"
+        // sizes="100vw"
         />
       </div>
 
@@ -50,12 +50,22 @@ export default function HeroSection() {
           {/* Description */}
           <motion.p
             variants={staggerItem}
-            className="max-w-md text-lg leading-[1.9] text-[#555555]"
+            className="max-w-md text-sm md:text-lg leading-[1.9] text-[#555555]"
           >
             Warm materials and sculptural lines designed to make every interior
             feel curated and quietly luxurious.
           </motion.p>
-
+          <div className="block md:hidden w-full h-[200px] relative">
+            <Image
+              src="/heroImage2.png"
+              alt=""
+              fill
+              priority
+              quality={100}
+              className="object-cover object-center"
+            // sizes="100vw"
+            />
+          </div>
           {/* CTAs */}
           <motion.div
             variants={staggerItem}
