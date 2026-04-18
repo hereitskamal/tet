@@ -65,7 +65,7 @@ export default function FAQSection() {
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-16 py-20">
       <p className="text-[10px] tracking-[0.28em] uppercase text-[#777] mb-3 text-center">support</p>
-      <h2 className="text-[clamp(1.6rem,3.5vw,4rem)] font-medium font-black lowercase tracking-tight text-center mb-14">
+      <h2 className="text-[clamp(2.4rem,3.5vw,4rem)] font-[700] lowercase tracking-tight md:text-center mb-14">
         frequently asked questions
       </h2>
 

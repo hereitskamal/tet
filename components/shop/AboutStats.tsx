@@ -43,13 +43,13 @@ export default function AboutStats() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex flex-col gap-8"
+          className="flex flex-col gap-8 max-w-sm mt-5"
         >
-          <p className="text-sm md:text-lg text-[#555555] mt-0 md:mt-10 xl:mt-18 leading-[1.85] max-w-sm">
+          <p className="text-sm md:text-lg text-[#555555] leading-[1.85]">
             With a commitment to craftsmanship, sustainable materials, and a customer-first approach, we help you create spaces that feel beautiful from the very first piece.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:gap-6 md:max-w-sm xl:max-w-md">
+          <div className="grid grid-cols-2 gap-6">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -57,7 +57,7 @@ export default function AboutStats() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: 0.2 + i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className={`bg-[#f4f4f4] rounded-2xl shadow-lg w-36 h-36 md:h-48 xl:h-48 md:w-54 xl:w-54 px-6 py-5 mt-${i<4?i * 4:0}`}
+                className="bg-[#f4f4f4] rounded-2xl p-6 aspect-square flex flex-col items-start justify-end"
               >
                 <p className="text-[2rem] tracking-tight leading-none mb-1">
                   {stat.value}

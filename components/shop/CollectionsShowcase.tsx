@@ -105,7 +105,7 @@ export default function CollectionsShowcase() {
                 transition={scaleTransition}
               >
                 <Image src={item.src} alt={item.label} fill quality={95}
-                  className="object-contain object-bottom"
+                  className="ml-8 object-contain object-bottom"
                   sizes="90vw" />
               </motion.div>
               {/* <div className="h-px bg-[#e2e2e2] mb-3" /> */}
