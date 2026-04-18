@@ -45,11 +45,11 @@ export default function AboutStats() {
           transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="flex flex-col gap-8"
         >
-          <p className="text-lg text-[#555555] mt-0 md:mt-20 leading-[1.85] max-w-sm">
+          <p className="text-sm md:text-lg text-[#555555] mt-0 md:mt-10 xl:mt-18 leading-[1.85] max-w-sm">
             With a commitment to craftsmanship, sustainable materials, and a customer-first approach, we help you create spaces that feel beautiful from the very first piece.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:gap-6 md:max-w-sm xl:max-w-md">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -57,7 +57,7 @@ export default function AboutStats() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: 0.2 + i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className={`bg-[#f4f4f4] rounded-2xl shadow-lg h-68 w-68 px-6 py-5 mt-${i * 6}`}
+                className={`bg-[#f4f4f4] rounded-2xl shadow-lg w-36 h-36 md:h-48 xl:h-48 md:w-54 xl:w-54 px-6 py-5 mt-${i<4?i * 4:0}`}
               >
                 <p className="text-[2rem] tracking-tight leading-none mb-1">
                   {stat.value}

@@ -11,7 +11,7 @@ export default function HeroSection() {
     <section className="relative overflow-hidden min-h-[100svh] flex items-center bg-white">
 
       {/* ── Background image — desktop only ───────────────────────── */}
-      <div className="hidden md:block absolute w-full h-full md:max-w-[400px] md:max-h-[300px] md:max-w-[600px] md:max-h-[460px] top-1/2 transform -translate-y-1/3 right-1/4 translate-x-1/2">
+      <div className="hidden md:block absolute w-full h-full md:max-w-[400px] md:max-h-[300px] lg:max-w-[500px] lg:max-h-[400px] 2xl:max-w-[600px] 2xl:max-h-[460px] top-1/2 transform -translate-y-1/3 right-1/4 translate-x-1/2">
         <Image
           src="/heroImage2.png"
           alt=""
@@ -63,7 +63,6 @@ export default function HeroSection() {
               priority
               quality={100}
               className="object-cover object-center"
-            // sizes="100vw"
             />
           </div>
           {/* CTAs */}

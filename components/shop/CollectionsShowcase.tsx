@@ -13,6 +13,8 @@ const items = [
   { label: 'lamps',     tag: 'lighting', src: '/lamp.png',    href: '/products?category=lighting' },
 ]
 
+const scaleTransition = { type: 'spring' as const, stiffness: 260, damping: 22 }
+
 export default function CollectionsShowcase() {
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-16 py-24 bg-white mt-10 rounded-3xl">
@@ -41,7 +43,6 @@ export default function CollectionsShowcase() {
       */}
       <div className="hidden lg:flex gap-6 items-end">
         {items.map((item, i) => {
-          // Chair (0) and bed (2) get taller treatment
           const tall = i === 0 || i === 2
           return (
             <motion.div
@@ -53,20 +54,20 @@ export default function CollectionsShowcase() {
               className="flex-1 group"
             >
               <Link href={item.href} className="block" data-cursor="view">
-                {/* Image — no bg, transparent PNG sits on page colour */}
-                <div className={`relative w-full ${tall ? 'h-[340px]' : 'h-[260px]'} mb-5`}>
+                <motion.div
+                  className={`relative w-full ${tall ? 'h-[340px]' : 'h-[260px]'} mb-5`}
+                  whileHover={{ scale: 1.15, y: -4 }}
+                  transition={scaleTransition}
+                >
                   <Image
                     src={item.src}
                     alt={item.label}
                     fill
                     quality={95}
-                    className="object-contain object-bottom transition-transform duration-600 group-hover:scale-105 group-hover:-translate-y-1"
+                    className="object-contain object-bottom"
                     sizes="20vw"
                   />
-                </div>
-
-                {/* Thin divider
-                <div className="h-px bg-[#e2e2e2] mb-4 transition-colors group-hover:bg-gray-400" /> */}
+                </motion.div>
 
                 {/* Label */}
                 <div className="flex items-end justify-between">
@@ -97,11 +98,15 @@ export default function CollectionsShowcase() {
           className="group"
         >
           <Link href={items[0].href} className="block" data-cursor="view">
-            <div className="relative w-full h-[240px] mb-4">
+            <motion.div
+              className="relative w-full h-[240px] mb-4"
+              whileHover={{ scale: 1.04 }}
+              transition={scaleTransition}
+            >
               <Image src={items[0].src} alt={items[0].label} fill quality={95}
-                className="object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
+                className="object-contain object-bottom"
                 sizes="90vw" />
-            </div>
+            </motion.div>
             <div className="h-px bg-[#e2e2e2] mb-3" />
             <div className="flex items-end justify-between">
               <div>
@@ -125,11 +130,15 @@ export default function CollectionsShowcase() {
               className="group"
             >
               <Link href={item.href} className="block" data-cursor="view">
-                <div className="relative w-full h-[180px] mb-4">
+                <motion.div
+                  className="relative w-full h-[180px] mb-4"
+                  whileHover={{ scale: 1.04 }}
+                  transition={scaleTransition}
+                >
                   <Image src={item.src} alt={item.label} fill quality={95}
-                    className="object-contain object-bottom transition-transform duration-500 group-hover:scale-105"
+                    className="object-contain object-bottom"
                     sizes="45vw" />
-                </div>
+                </motion.div>
                 <div className="h-px bg-[#e2e2e2] mb-3" />
                 <div className="flex items-end justify-between">
                   <div>

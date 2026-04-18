@@ -6,9 +6,21 @@ import type { Product } from '@/types'
 
 interface ProductGridProps {
   products: Product[]
+  cols?: number // desktop cols: 3 | 4 | 5
+  mobileCols?: number // mobile cols: 1 | 2
 }
 
-export default function ProductGrid({ products }: ProductGridProps) {
+const desktopColsClass: Record<number, string> = {
+  3: 'lg:grid-cols-3',
+  4: 'lg:grid-cols-4',
+  5: 'lg:grid-cols-5',
+}
+const mobileColsClass: Record<number, string> = {
+  1: 'grid-cols-1',
+  2: 'grid-cols-2',
+}
+
+export default function ProductGrid({ products, cols = 3, mobileCols = 2 }: ProductGridProps) {
   if (products.length === 0) {
     return (
       <div className="py-24 text-center">
@@ -18,14 +30,16 @@ export default function ProductGrid({ products }: ProductGridProps) {
     )
   }
 
+  const gridClass = `grid ${mobileColsClass[mobileCols] ?? 'grid-cols-2'} ${desktopColsClass[cols] ?? 'lg:grid-cols-3'} gap-x-4 gap-y-10`
+
   return (
     <motion.div
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12"
+      className={gridClass}
       initial="hidden"
       animate="visible"
       variants={{
         hidden: {},
-        visible: { transition: { staggerChildren: 0.07 } },
+        visible: { transition: { staggerChildren: 0.05 } },
       }}
     >
       {products.map((product, i) => (
