@@ -19,7 +19,7 @@ export default function CollectionsShowcase() {
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-16 py-24 bg-white mt-10 rounded-3xl">
       {/* Header */}
-      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between -mb-10">
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-10 md:-mb-10">
         <div>
           <p className="text-[10px] tracking-[0.24em] uppercase text-[#777777] mb-3">
             exclusive collections
@@ -87,70 +87,38 @@ export default function CollectionsShowcase() {
         })}
       </div>
 
-      {/* Mobile / tablet: 2-col grid, chair full-width on top */}
-      <div className="flex flex-col gap-8 lg:hidden">
-        {/* Row 1: chair full width */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="group"
-        >
-          <Link href={items[0].href} className="block" data-cursor="view">
-            <motion.div
-              className="relative w-full h-[240px] mb-4"
-              whileHover={{ scale: 1.04 }}
-              transition={scaleTransition}
-            >
-              <Image src={items[0].src} alt={items[0].label} fill quality={95}
-                className="object-contain object-bottom"
-                sizes="90vw" />
-            </motion.div>
-            <div className="h-px bg-[#e2e2e2] mb-3" />
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="text-[9px] tracking-[0.22em] uppercase text-[#aaaaaa] mb-1">{items[0].tag}</p>
-                <h3 className="text-base font-black lowercase tracking-tight">{items[0].label}</h3>
-              </div>
-              <ArrowRight className="w-3.5 h-3.5 text-[#aaaaaa]" />
-            </div>
-          </Link>
-        </motion.div>
-
-        {/* Row 2–3: 2-col */}
-        <div className="grid grid-cols-2 gap-6">
-          {items.slice(1).map((item, i) => (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="group"
-            >
-              <Link href={item.href} className="block" data-cursor="view">
-                <motion.div
-                  className="relative w-full h-[180px] mb-4"
-                  whileHover={{ scale: 1.04 }}
-                  transition={scaleTransition}
-                >
-                  <Image src={item.src} alt={item.label} fill quality={95}
-                    className="object-contain object-bottom"
-                    sizes="45vw" />
-                </motion.div>
-                <div className="h-px bg-[#e2e2e2] mb-3" />
-                <div className="flex items-end justify-between">
-                  <div>
-                    <p className="text-[9px] tracking-[0.22em] uppercase text-[#aaaaaa] mb-1">{item.tag}</p>
-                    <h3 className="text-sm font-black lowercase tracking-tight">{item.label}</h3>
-                  </div>
-                  <ArrowRight className="w-3 h-3 text-[#aaaaaa]" />
+      {/* Mobile / tablet: single column */}
+      <div className="flex flex-col gap-6 lg:hidden">
+        {items.map((item, i) => (
+          <motion.div
+            key={item.label}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="group"
+          >
+            <Link href={item.href} className="relative block" data-cursor="view">
+              <motion.div
+                className="relative w-full h-[190px] mb-10"
+                whileHover={{ scale: 1.04 }}
+                transition={scaleTransition}
+              >
+                <Image src={item.src} alt={item.label} fill quality={95}
+                  className="object-contain object-bottom"
+                  sizes="90vw" />
+              </motion.div>
+              {/* <div className="h-px bg-[#e2e2e2] mb-3" /> */}
+              <div className="absolute top-1/2 transform -translate-y-1/2 flex items-end justify-between">
+                <div>
+                  <p className="text-[9px] tracking-[0.22em] uppercase text-[#aaaaaa] mb-1">{item.tag}</p>
+                  <h3 className="text-base font-medium lowercase tracking-tight">{item.label}</h3>
+                <ArrowRight className="w-3.5 h-3.5 text-[#aaaaaa]" />
                 </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
       </div>
     </section>
   )
