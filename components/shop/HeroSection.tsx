@@ -42,9 +42,9 @@ export default function HeroSection() {
           {/* Headline */}
           <motion.h1
             variants={staggerItem}
-            className="text-[clamp(3.5rem,8vw,4.8rem)] font-black leading-[0.95] tracking-[-0.04em] max-w-xl"
+            className="text-[clamp(3.5rem,8vw,4.8rem)] font-bold sm:font-[700] leading-[0.95] tracking-[-0.04em] max-w-xl"
           >
-            Calm furniture for rooms that feel effortless.
+            Calm <span className="text-stone-400">furniture</span> for rooms that feel effortless.
           </motion.h1>
 
           {/* Description */}
@@ -72,14 +72,14 @@ export default function HeroSection() {
           >
             <Link
               href="/products"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-8 py-4 text-sm font-semibold text-white uppercase tracking-[0.18em] hover:bg-[#222222] transition-colors group"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-black px-8 py-4 text-xs md:text-sm font-semibold text-white uppercase tracking-[0.18em] hover:bg-[#222222] transition-colors group"
             >
               shop now
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               href="/collections"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-black px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black hover:bg-[#f3f3f3] transition-colors"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-black px-8 py-4 text-xs md:text-sm font-semibold uppercase tracking-[0.18em] text-black hover:bg-[#f3f3f3] transition-colors"
             >
               explore collection
             </Link>
